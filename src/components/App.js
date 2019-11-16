@@ -15,7 +15,7 @@ const App = () => {
   const [mode, setMode] = useState('session')
   const [time, setTime] = useState(sessionVal * 60 * 1000)
   const [active, setActive] = useState(false)
-  const beep = useRef()
+  useRef();
 
   useInterval(() => setTime(time - 1000), active ? 1000 : null)
 
@@ -25,19 +25,15 @@ const App = () => {
 
   useEffect(() => {
     if (time === 0 && mode === 'session') {
-      beep.current.play()
       setMode('break')
       setTime(breakVal * 60 * 1000)
     } else if (time === 0 && mode === 'break') {
-      beep.current.play()
       setMode('session')
       setTime(sessionVal * 60 * 1000)
     }
   }, [time, breakVal, sessionVal, mode])
 
   const handleReset = () => {
-    beep.current.pause()
-    beep.current.currentTime = 0
     setActive(false)
     setMode('session')
     setBreakVal(5)
@@ -63,8 +59,6 @@ const App = () => {
           <TimeSet type={'Session'} value={[sessionVal, setSessionVal]} />
         </div>
       </main>
-      <ReactFcctest />
-      <audio id="beep" src={alarm} ref={beep} />
     </div>
   )
 }
