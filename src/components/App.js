@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import ReactFcctest from 'react-fcctest'
 
 import { useInterval } from '../hooks/useInterval'
 
@@ -10,10 +9,12 @@ import Controls from './Controls'
 import alarm from '../sounds/alarm.mp3'
 
 const App = () => {
-  const [breakVal, setBreakVal] = useState(5)
+  const [breakVal, setBreakVal] = useState(0)
+  const [sessionMinutes, setSessionMinutes] = useState(0)
+  const [sessionHours, setsessionHours] = useState(0)
   const [sessionVal, setSessionVal] = useState(25)
   const [mode, setMode] = useState('session')
-  const [time, setTime] = useState(sessionVal * 60 * 1000)
+  const [time, setTime] = useState(0)
   const [active, setActive] = useState(false)
   useRef();
 
@@ -55,7 +56,7 @@ const App = () => {
           />
         </div>
         <div className="timeset-wrapper">
-          <TimeSet type={'Break'} value={[breakVal, setBreakVal]} />
+          {/*<TimeSet type={'Break'} value={[breakVal, setBreakVal]} />*/}
           <TimeSet type={'Session'} value={[sessionVal, setSessionVal]} />
         </div>
       </main>

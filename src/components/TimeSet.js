@@ -1,39 +1,35 @@
-import React from 'react'
+import React, {useRef, useState, useEffect} from 'react';
 
-const TimeSet = ({type, minutes, hours}) => {
-    const [minutes, setMinutes] = minutes;
-    const [hours, setHours] = hours;
-    const [val, setVal] = val;
-    const handleIncrement = () => {
-        if (val >= 60) {
-            return null
+const TimeSet = ({type, value}) => {
+    const [val, setVal] = value;
+    const [minutes, setMinutes] = useState(0);
+    const [hours, setHours] = useState(0);
+    const handleChanges = (e, type) => {
+        console.log(val + " =>" + hours + ":" + minutes);
+        console.log(typeof hours + " type of hours" + hours);
+        console.log(typeof minutes + "type of minutes" + minutes);
+        console.log(typeof val + "type of val" + val);
+        if (type === 'minutes') {
+            console.log('minutes');
+            setMinutes(e);
+            console.log(minutes);
         } else {
-            setVal(val + 1)
+            console.log('hours');
+            setHours(e);
+            console.log(hours);
         }
-    };
-    const handleDecrement = () => {
-        if (val === 1) {
-            return null
-        } else {
-            setVal(val - 1)
-        }
+        let time = hours * 60 + minutes;
+        console.log(time);
+        setVal(time*1000);
+        console.log(val + " =>" + hours + ":" + minutes);
     };
     return (
-        <div class="control">
+        <div className="control">
             <h2 id={`${type.toLowerCase()}-label`}>{type} Length</h2>
-            <div>
-                <span>Hours</span>
-                <input type="text" onChange={(e) => setVal(e.target.value)}/>
-                <span>Minutes</span>
-                {/*<input type="text" onChange={(e) => setVal(e.target.value)}/>*/}
-            </div>
-            <button id={`${type.toLowerCase()}-increment`} onClick={handleIncrement}>
-                &uarr;
-            </button>
-            <h3 id={`${type.toLowerCase()}-length`}>{val}</h3>
-            <button id={`${type.toLowerCase()}-decrement`} onClick={handleDecrement}>
-                &darr;
-            </button>
+            <span>Minutes</span>
+            <input type="text" onChange={e => handleChanges(e.target.value, 'minutes')}/>
+            <span>Hours</span>
+            <input type="text" onChange={(e) => handleChanges(e.target.value, 'hours')}/>
         </div>
     )
 }
