@@ -16,7 +16,7 @@ const App = () => {
   const [active, setActive] = useState(false);
   useRef();
 
-  useInterval(() => setTime(time - 1000), active ? 1000 : null)
+  useInterval(() => setTime(time - 1), active ? 1000 : null)
 
   useEffect(() => {
     setTime(sessionVal)

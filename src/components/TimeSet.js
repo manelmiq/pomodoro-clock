@@ -10,10 +10,7 @@ const TimeSet = ({type, value}) => {
     });
 
     useEffect(() => {
-        console.log(state);
-        setVal(parseInt(state.minutes) + parseInt(state.hours ) * 60);
-        console.log("value ", val);
-        console.log('render minutes');
+        setVal((parseInt(state.minutes) + parseInt(state.hours ) * 60 )*60);
     }, [state.minutes, state.hours]);
 
     function handleChange(evt) {
@@ -22,17 +19,15 @@ const TimeSet = ({type, value}) => {
             ...state,
             [evt.target.name]: value
         });
-        console.log('new state');
-        setVal(parseInt(state.minutes)  + (parseInt(state.hours)*60) * 1000);
     }
 
     return (
         <div className="control">
             <h2 id={`${type.toLowerCase()}-label`}>{type} Length</h2>
             <span>Minutes</span>
-            <input type="text" value={state.minutes} name="minutes" onChange={handleChange}/>
+            <input type="number" value={state.minutes} name="minutes" onChange={handleChange} min="0" max="59"/>
             <span>Hours</span>
-            <input type="text" value={state.hours} name="hours" onChange={handleChange}/>
+            <input type="number" value={state.hours} name="hours" onChange={handleChange} min="0" max="8"/>
         </div>
     )
 };
