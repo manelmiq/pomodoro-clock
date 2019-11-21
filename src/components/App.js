@@ -5,17 +5,21 @@ import {useInterval} from '../hooks/useInterval'
 import TimeSet from './TimeSet'
 import Timer from './Timer'
 import Controls from './Controls'
+import axios from 'axios';
+import moment from "moment";
 
-import alarm from '../sounds/alarm.mp3'
 
 const App = () => {
     const [breakVal, setBreakVal] = useState(0);
     const [sessionVal, setSessionVal] = useState(0);
     const [mode, setMode] = useState('session');
-    const [time, setTime] = useState(0);
+    const [time, setTime] = useState(60);
     const [active, setActive] = useState(false);
-    const [task, setTask] = useState('');
-    const [distractions, setDistractions] = useState('');
+    const [task, setTask] = useState('task from react');
+    const [distractions, setDistractions] = useState('distractions from react');
+    const [distractionsCounter, setDistractionsCounter] = useState(0);
+    const [beginRest, setBeginRest] = useState(0);
+    const [endPomorodo, setEndPomorodo] = useState(0);
     useRef();
 
     useInterval(() => setTime(time - 1), active ? 1000 : null)
@@ -24,7 +28,7 @@ const App = () => {
         setTime(sessionVal)
         console.log("time and session value", time, sessionVal);
     }, [sessionVal])
-
+    //
     // useEffect(() => {
     //   if (time === 0 && mode === 'session') {
     //     setMode('break')
@@ -43,12 +47,28 @@ const App = () => {
     };
 
     const handleSubmit = () => {
-        console.log(task);
         console.log(time);
-        console.log(distractions);
+        let beginWork = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+        let beginRest = moment(beginWork).add(time, 'seconds').format("YYYY-MM-DD HH:mm:ss");
+        let endPomodoro = moment(beginRest).add(breakVal, 'seconds').format("YYYY-MM-DD HH:mm:ss");
+        let pomodori = {
+            "task": task,
+            "distractions": distractions,
+            "distractions_counter": distractionsCounter,
+            "beginWork": beginWork,
+            "beginRest": beginRest,
+            "endPomodoro": endPomodoro
+        };
+        console.log(pomodori);
+        axios
+            .post('http://localhost:8080/pomodori', pomodori)
+            .then(
+                response => {
+                    console.log(response);
+                    console.log(response.data);
+                }
+            );
     };
-
-
     return (
         <div className="container">
             <header>
@@ -68,19 +88,22 @@ const App = () => {
                 </div>
                 <label>
                     Task
-                    <input type="text" name={task} onChange={e => setTask(e.target.value)} placeholder={"this task"}/>
                 </label>
+                <input type="text" name={task} onChange={e => setTask(e.target.value)} placeholder={"Task"}/>
                 <label>
                     Distractions
                 </label>
                 <input type="text" name={distractions} onChange={e => setDistractions(e.target.value)}
-                       placeholder={"this distractions"}/>
+                       placeholder={"Distractions"}/>
+                <label>
+                    Distractions Counter
+                </label>
+                <input type="text" name={distractionsCounter} onChange={e => setDistractions(e.target.value)}
+                       placeholder={"Distractions"}/>
                 <input type="submit" onClick={handleSubmit}/>
             </main>
-
-
         </div>
     )
-}
+};
 
 export default App
