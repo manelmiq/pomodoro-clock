@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 
 import {useInterval} from '../hooks/useInterval'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import TimeSet from './TimeSet'
 import Timer from './Timer'
@@ -10,7 +11,7 @@ import moment from "moment";
 
 
 const App = () => {
-    const [breakVal, setBreakVal] = useState(0);
+    const [breakVal, setBreakVal] = useState(25);
     const [sessionVal, setSessionVal] = useState(0);
     const [mode, setMode] = useState('session');
     const [time, setTime] = useState(60);
@@ -18,11 +19,15 @@ const App = () => {
     const [task, setTask] = useState('task from react');
     const [distractions, setDistractions] = useState('distractions from react');
     const [distractionsCounter, setDistractionsCounter] = useState(0);
-    const [beginRest, setBeginRest] = useState(0);
-    const [endPomorodo, setEndPomorodo] = useState(0);
+    const [description, setDescription] = useState('description from pomodoro');
+
     useRef();
 
-    useInterval(() => setTime(time - 1), active ? 1000 : null)
+    useInterval(() => {
+        if(time > 0){
+            setTime(time - 1)
+        }
+    }, active ? 1000 : null);
 
     useEffect(() => {
         setTime(sessionVal)
@@ -53,11 +58,12 @@ const App = () => {
         let endPomodoro = moment(beginRest).add(breakVal, 'seconds').format("YYYY-MM-DD HH:mm:ss");
         let pomodori = {
             "task": task,
-            "distractions": distractions,
-            "distractions_counter": distractionsCounter,
+            "distractionsDescription": distractions,
+            "distractionsCounter": distractionsCounter,
+            "description": description,
             "beginWork": beginWork,
             "beginRest": beginRest,
-            "endPomodoro": endPomodoro
+            "endPomodori": endPomodoro
         };
         console.log(pomodori);
         axios
@@ -71,37 +77,43 @@ const App = () => {
     };
     return (
         <div className="container">
-            <header>
-                <h1>Pomodoro Clock</h1>
-            </header>
-            <main>
-                <div className="time-wrapper">
-                    <Timer currentMode={[mode, setMode]} currentTime={[time, setTime]}/>
-                    <Controls
-                        activeStatus={[active, setActive]}
-                        handleReset={handleReset}
-                    />
+            <div className="row">
+                <div className="col-sm-6">
+                    <label >
+                        Task
+                    </label>
+                    <input className="form-control" type="text" name={task} onChange={e => setTask(e.target.value)} placeholder={"Task"}/>
+                    <label>
+                        Description
+                    </label>
+                    <input className="form-control" type="text" name={description} onChange={e => setDescription(e.target.value)} placeholder={"Description"}/>
+                    <label>
+                        Distractions
+                    </label>
+                    <input className="form-control" type="text" name={distractions} onChange={e => setDistractions(e.target.value)}
+                           placeholder={"Distractions"}/>
+                    <label>
+                        Distractions Counter
+                    </label>
+                    <input className="form-control" type="text" name={distractionsCounter} onChange={e => setDistractionsCounter(e.target.value)}
+                           placeholder={"Distractions"}/>
+                    <input type="submit" className="btn btn-info" onClick={handleSubmit}/>
                 </div>
-                <div className="timeset-wrapper">
-                    <TimeSet type={'Break'} value={[breakVal, setBreakVal]}/>
-                    <TimeSet type={'Session'} value={[sessionVal, setSessionVal]}/>
+                <div className="col-sm-6">
+                    <div className="time-wrapper">
+                        <Timer currentMode={[mode, setMode]} currentTime={[time, setTime]}
+                               currentBreakTime={[breakVal, setBreakVal]}/>
+                        <Controls
+                            activeStatus={[active, setActive]}
+                            handleReset={handleReset}
+                        />
+                    </div>
+                    <div className="timeset-wrapper">
+                        <TimeSet type={'Break'} value={[breakVal, setBreakVal]}/>
+                        <TimeSet type={'Session'} value={[sessionVal, setSessionVal]}/>
+                    </div>
                 </div>
-                <label>
-                    Task
-                </label>
-                <input type="text" name={task} onChange={e => setTask(e.target.value)} placeholder={"Task"}/>
-                <label>
-                    Distractions
-                </label>
-                <input type="text" name={distractions} onChange={e => setDistractions(e.target.value)}
-                       placeholder={"Distractions"}/>
-                <label>
-                    Distractions Counter
-                </label>
-                <input type="text" name={distractionsCounter} onChange={e => setDistractions(e.target.value)}
-                       placeholder={"Distractions"}/>
-                <input type="submit" onClick={handleSubmit}/>
-            </main>
+            </div>
         </div>
     )
 };

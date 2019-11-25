@@ -1,6 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import NumericInput from 'react-numeric-input';
-
+import React, { useEffect} from 'react';
 
 const TimeSet = ({type, value}) => {
     const [val, setVal] = value;
@@ -10,7 +8,11 @@ const TimeSet = ({type, value}) => {
     });
 
     useEffect(() => {
-        setVal((parseInt(state.minutes) + parseInt(state.hours ) * 60 )*60);
+        let newVal = (parseInt(state.minutes) + parseInt(state.hours) * 60) * 60;
+        if(isNaN(newVal)){
+            newVal = '';
+        }
+        setVal(newVal);
     }, [state.minutes, state.hours]);
 
     function handleChange(evt) {
@@ -25,7 +27,7 @@ const TimeSet = ({type, value}) => {
         <div className="control">
             <h2 id={`${type.toLowerCase()}-label`}>{type} Length</h2>
             <span>Minutes</span>
-            <input type="number"  value={state.minutes} name="minutes" onChange={handleChange} min="0" max="59"/>
+            <input type="number" value={state.minutes} name="minutes" onChange={handleChange} min="0" max="59"/>
             <span>Hours</span>
             <input type="number" value={state.hours} name="hours" onChange={handleChange} min="0" max="8"/>
         </div>
