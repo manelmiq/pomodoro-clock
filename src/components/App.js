@@ -24,25 +24,26 @@ const App = () => {
     useRef();
 
     useInterval(() => {
-        if(time > 0){
-            setTime(time - 1)
+        if (time > 0) {
+            setTime(time - 1);
         }
-    }, active ? 1000 : null);
+    }, active ? 100 : null);
+
+    // useEffect(() => {
+    //     setTime(sessionVal);
+    //     console.log("time and session value", time, sessionVal);
+    // }, [sessionVal]);
 
     useEffect(() => {
-        setTime(sessionVal)
-        console.log("time and session value", time, sessionVal);
-    }, [sessionVal])
-    //
-    // useEffect(() => {
-    //   if (time === 0 && mode === 'session') {
-    //     setMode('break')
-    //     setTime(breakVal * 60 * 1000)
-    //   } else if (time === 0 && mode === 'break') {
-    //     setMode('session')
-    //     setTime(sessionVal * 60 * 1000)
-    //   }
-    // }, [time, breakVal, sessionVal, mode])
+        if (time === 0 && mode === 'session') {
+            setMode('break');
+            setTime(breakVal * 60 * 1000);
+            setBreakVal(600);
+        } else if (time === 0 && mode === 'break') {
+            setMode('session')
+            setTime(sessionVal * 60 * 1000)
+        }
+    }, [time, breakVal, sessionVal, mode])
 
     const handleReset = () => {
         setActive(false)
@@ -79,39 +80,43 @@ const App = () => {
         <div className="container">
             <div className="row">
                 <div className="col-sm-6">
-                    <label >
+                    <label>
                         Task
                     </label>
-                    <input className="form-control" type="text" name={task} onChange={e => setTask(e.target.value)} placeholder={"Task"}/>
+                    <input className="form-control" type="text" name={task} onChange={e => setTask(e.target.value)}
+                           placeholder={"Task"}/>
                     <label>
                         Description
                     </label>
-                    <input className="form-control" type="text" name={description} onChange={e => setDescription(e.target.value)} placeholder={"Description"}/>
+                    <input className="form-control" type="text" name={description}
+                           onChange={e => setDescription(e.target.value)} placeholder={"Description"}/>
                     <label>
                         Distractions
                     </label>
-                    <input className="form-control" type="text" name={distractions} onChange={e => setDistractions(e.target.value)}
+                    <input className="form-control" type="text" name={distractions}
+                           onChange={e => setDistractions(e.target.value)}
                            placeholder={"Distractions"}/>
                     <label>
                         Distractions Counter
                     </label>
-                    <input className="form-control" type="text" name={distractionsCounter} onChange={e => setDistractionsCounter(e.target.value)}
+                    <input className="form-control" type="text" name={distractionsCounter}
+                           onChange={e => setDistractionsCounter(e.target.value)}
                            placeholder={"Distractions"}/>
                     <input type="submit" className="btn btn-info" onClick={handleSubmit}/>
                 </div>
                 <div className="col-sm-6">
-                    <div className="time-wrapper">
+                    <div className="time-wrapper-working">
                         <Timer currentMode={[mode, setMode]} currentTime={[time, setTime]}
-                               currentBreakTime={[breakVal, setBreakVal]}/>
-                        <Controls
-                            activeStatus={[active, setActive]}
-                            handleReset={handleReset}
-                        />
+                            currentBreakTime={[breakVal, setBreakVal]}/>
+                            
                     </div>
-                    <div className="timeset-wrapper">
-                        <TimeSet type={'Break'} value={[breakVal, setBreakVal]}/>
-                        <TimeSet type={'Session'} value={[sessionVal, setSessionVal]}/>
-                    </div>
+                    <Controls
+                        activeStatus={[active, setActive]}
+                        handleReset={handleReset}
+                    />
+                    <TimeSet type={'Break'} value={[breakVal, setBreakVal]}/>
+                    <TimeSet type={'Session'} value={[sessionVal, setSessionVal]}/>
+
                 </div>
             </div>
         </div>

@@ -42,8 +42,15 @@ main {
   align-items: center;
 }
 
-.time-wrapper {
-  background-color: #fafafa;
+.time-wrapper-working {
+  background-color: #333fdd;
+  width: 100%;
+  padding: 1rem;
+  box-shadow: 0 3px 6px #888888;
+}
+
+.time-wrapper-resting {
+  background-color: #19e42a;
   width: 100%;
   padding: 1rem;
   box-shadow: 0 3px 6px #888888;

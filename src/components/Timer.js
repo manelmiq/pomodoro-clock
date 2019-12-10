@@ -9,14 +9,17 @@ const Timer = ({currentMode, currentTime, currentBreakTime}) => {
     return (
         <>
             <h2 id="timer-label">{mode === 'session' ? 'Session' : 'Break'}</h2>
-            <h3 id="time-left">
+            <div className="time-wrapper-working"><h3 id="time-left">
                 {moment.duration(time, unit).hours()}
                 :{moment.duration(time, unit).minutes()}
                 :{moment.duration(time, unit).seconds()}</h3>
-            <h3 id="time-left">
+            </div>
+            <div className="time-wrapper-resting">
+                <h3 id="time-left">
                 {moment.duration(breakTime, unit).hours()}
                 :{moment.duration(breakTime, unit).minutes()}
                 :{moment.duration(breakTime, unit).seconds()}</h3>
+            </div>
         </>
     )
 };

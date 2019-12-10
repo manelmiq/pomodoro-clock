@@ -4,7 +4,7 @@ const Controls = ({ activeStatus, handleReset }) => {
   const [active, setActive] = activeStatus
   return (
     <div className="controls-wrapper">
-      <button id="start_stop" onClick={() => setActive(true)}>
+      <button id="start_stop" onClick={() => setActive(activeStatus)}>
         {active ? <span>&#10074;&#10074;</span> : <span>&#9658;</span>}
       </button>
       <button id="reset" onClick={handleReset}>
