@@ -1,26 +1,20 @@
 import React from 'react'
 import moment from 'moment'
 
-const Timer = ({currentMode, currentTime, currentBreakTime}) => {
-    const [mode] = currentMode;
+const Timer = ({currentTime, label}) => {
     const [time] = currentTime;
-    const [breakTime] = currentBreakTime;
     const [unit] = 'seconds';
     return (
-        <>
-            <h2 id="timer-label">{mode === 'session' ? 'Session' : 'Break'}</h2>
-            <div className="time-wrapper-working"><h3 id="time-left">
-                {moment.duration(time, unit).hours()}
-                :{moment.duration(time, unit).minutes()}
-                :{moment.duration(time, unit).seconds()}</h3>
-            </div>
-            <div className="time-wrapper-resting">
+        <div>
+            <h2 id="timer-label">{label}</h2>
+            <div>
                 <h3 id="time-left">
-                {moment.duration(breakTime, unit).hours()}
-                :{moment.duration(breakTime, unit).minutes()}
-                :{moment.duration(breakTime, unit).seconds()}</h3>
+                    {moment.duration(time, unit).hours()}
+                    :{moment.duration(time, unit).minutes()}
+                    :{moment.duration(time, unit).seconds()}
+                </h3>
             </div>
-        </>
+        </div>
     )
 };
 

@@ -11,7 +11,7 @@ import moment from "moment";
 
 
 const App = () => {
-    const [breakVal, setBreakVal] = useState(25);
+    const [breakTime, setBreakTime] = useState(25);
     const [sessionVal, setSessionVal] = useState(0);
     const [mode, setMode] = useState('session');
     const [time, setTime] = useState(60);
@@ -27,28 +27,21 @@ const App = () => {
         if (time > 0) {
             setTime(time - 1);
         }
-    }, active ? 100 : null);
-
-    // useEffect(() => {
-    //     setTime(sessionVal);
-    //     console.log("time and session value", time, sessionVal);
-    // }, [sessionVal]);
+        if(breakTime > 0){
+            setBreakTime(breakTime - 1);
+        }
+    }, active ? 10 : null);
 
     useEffect(() => {
-        if (time === 0 && mode === 'session') {
-            setMode('break');
-            setTime(breakVal * 60 * 1000);
-            setBreakVal(600);
-        } else if (time === 0 && mode === 'break') {
-            setMode('session')
-            setTime(sessionVal * 60 * 1000)
-        }
-    }, [time, breakVal, sessionVal, mode])
+        setTime(sessionVal);
+        console.log("time and session value", time, sessionVal);
+    }, [sessionVal]);
+
 
     const handleReset = () => {
         setActive(false)
         setMode('session')
-        setBreakVal(0)
+        setBreakTime(0)
         setSessionVal(0)
     };
 
@@ -56,7 +49,7 @@ const App = () => {
         console.log(time);
         let beginWork = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
         let beginRest = moment(beginWork).add(time, 'seconds').format("YYYY-MM-DD HH:mm:ss");
-        let endPomodoro = moment(beginRest).add(breakVal, 'seconds').format("YYYY-MM-DD HH:mm:ss");
+        let endPomodoro = moment(beginRest).add(breakTime, 'seconds').format("YYYY-MM-DD HH:mm:ss");
         let pomodori = {
             "task": task,
             "distractionsDescription": distractions,
@@ -105,18 +98,16 @@ const App = () => {
                     <input type="submit" className="btn btn-info" onClick={handleSubmit}/>
                 </div>
                 <div className="col-sm-6">
-                    <div className="time-wrapper-working">
-                        <Timer currentMode={[mode, setMode]} currentTime={[time, setTime]}
-                            currentBreakTime={[breakVal, setBreakVal]}/>
-                            
+                    <div>
+                        <Timer id={"work"} currentTime={[time, setTime]} />
+                        <Timer id={"restTime"} currentTime={[breakTime, setBreakTime]} />
+                        <TimeSet type={'Work time'} value={[sessionVal, setSessionVal]}/>
+                        <TimeSet type={'Break time'} value={[breakTime, setBreakTime]}/>
                     </div>
                     <Controls
                         activeStatus={[active, setActive]}
                         handleReset={handleReset}
                     />
-                    <TimeSet type={'Break'} value={[breakVal, setBreakVal]}/>
-                    <TimeSet type={'Session'} value={[sessionVal, setSessionVal]}/>
-
                 </div>
             </div>
         </div>
