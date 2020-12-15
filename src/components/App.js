@@ -72,37 +72,37 @@ const App = () => {
     return (
         <div className="container">
             <div className="row">
-                <div className="col-sm-6">
-                    <label>
-                        Task
-                    </label>
-                    <input className="form-control" type="text" name={task} onChange={e => setTask(e.target.value)}
-                           placeholder={"Task"}/>
-                    <label>
-                        Description
-                    </label>
-                    <input className="form-control" type="text" name={description}
-                           onChange={e => setDescription(e.target.value)} placeholder={"Description"}/>
-                    <label>
-                        Distractions
-                    </label>
-                    <input className="form-control" type="text" name={distractions}
-                           onChange={e => setDistractions(e.target.value)}
-                           placeholder={"Distractions"}/>
-                    <label>
-                        Distractions Counter
-                    </label>
-                    <input className="form-control" type="text" name={distractionsCounter}
-                           onChange={e => setDistractionsCounter(e.target.value)}
-                           placeholder={"Distractions"}/>
-                    <input type="submit" className="btn btn-info" onClick={handleSubmit}/>
-                </div>
+                {/*<div className="col-sm-6">*/}
+                {/*    <label>*/}
+                {/*        Task*/}
+                {/*    </label>*/}
+                {/*    <input className="form-control" type="text" name={task} onChange={e => setTask(e.target.value)}*/}
+                {/*           placeholder={"Task"}/>*/}
+                {/*    <label>*/}
+                {/*        Description*/}
+                {/*    </label>*/}
+                {/*    <input className="form-control" type="text" name={description}*/}
+                {/*           onChange={e => setDescription(e.target.value)} placeholder={"Description"}/>*/}
+                {/*    <label>*/}
+                {/*        Distractions*/}
+                {/*    </label>*/}
+                {/*    <input className="form-control" type="text" name={distractions}*/}
+                {/*           onChange={e => setDistractions(e.target.value)}*/}
+                {/*           placeholder={"Distractions"}/>*/}
+                {/*    <label>*/}
+                {/*        Distractions Counter*/}
+                {/*    </label>*/}
+                {/*    <input className="form-control" type="text" name={distractionsCounter}*/}
+                {/*           onChange={e => setDistractionsCounter(e.target.value)}*/}
+                {/*           placeholder={"Distractions"}/>*/}
+                {/*    <input type="submit" className="btn btn-info" onClick={handleSubmit}/>*/}
+                {/*</div>*/}
                 <div className="col-sm-6">
                     <div>
                         <Timer id={"work"} currentTime={[time, setTime]} />
                         <Timer id={"restTime"} currentTime={[breakTime, setBreakTime]} />
-                        <TimeSet type={'Work time'} value={[sessionVal, setSessionVal]}/>
-                        <TimeSet type={'Break time'} value={[breakTime, setBreakTime]}/>
+                        {/*<TimeSet type={'Work time'} value={[sessionVal, setSessionVal]}/>*/}
+                        {/*<TimeSet type={'Break time'} value={[breakTime, setBreakTime]}/>*/}
                     </div>
                     <Controls
                         activeStatus={[active, setActive]}

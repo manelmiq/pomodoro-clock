@@ -56,11 +56,13 @@ main {
   box-shadow: 0 3px 6px #888888;
 }
 
-.time-wrapper h2 {
+.time-wrapper  {
   text-align: right;
   font-size: 2rem;
   text-transform: uppercase;
   color: #7a7a7a;
+  border-width:0px;
+  border:none;
 }
 
 .time-wrapper h3 {
@@ -123,4 +125,16 @@ main {
   main {
     width: 100%;
   }
+}
+
+.timeinput input[type="text"]
+{
+  background: transparent;
+  border: none;
+}
+
+.clockDigits{
+  border-width:0px;
+  border:none;
+  width: 70px;
 }
