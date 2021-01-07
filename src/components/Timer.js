@@ -36,6 +36,10 @@ const Timer = ({currentTime, label}) => {
     function formatTwoDigits(number) {
         return ((number < 10) ? '0' + number : number);
     }
+    const handleTimeChange = () =>{
+        console.log("focus");
+        console.log(time);
+    }
 
     // const emptyValue = () => {
     //     setHour('');
@@ -43,8 +47,8 @@ const Timer = ({currentTime, label}) => {
     // }
 
     return (
-        <div>
-            <h1 className="timeset-wrapper">
+        <div onFocus={handleTimeChange}>
+            <h1 className="timeset-wrapper"  >
                 <input type="number" name="hour" className="clockDigits"
                        value={formatTwoDigits(moment.duration(time, unit).hours())}
                        onChange={changeHours} /> :

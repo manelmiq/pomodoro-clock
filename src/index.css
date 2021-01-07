@@ -88,6 +88,14 @@ main {
   justify-content: space-between;
 }
 
+
+.timeset-wrapper focus{
+  margin: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
 .timeset-wrapper .control {
   display: flex;
   flex-direction: column;
