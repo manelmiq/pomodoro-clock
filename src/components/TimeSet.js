@@ -19,6 +19,7 @@ const TimeSet = ({type, value}) => {
 
     function handleChange(evt) {
         const value = evt.target.value;
+        console.log(value);
         setState({
             ...state,
             [evt.target.name]: value

@@ -24,25 +24,29 @@ const App = () => {
     useRef();
 
     useInterval(() => {
-        if (time > 0) {
-            setTime(time - 1);
-        }
-        if(breakTime > 0){
-            setBreakTime(breakTime - 1);
+        if (mode === 'session') {
+            if (time > 0) {
+                setTime(time - 1);
+            }else{
+                setMode('break');
+            }
+        } else {
+            if (breakTime > 0) {
+                setBreakTime(breakTime - 1);
+            }
         }
     }, active ? 10 : null);
 
     useEffect(() => {
         setTime(sessionVal);
-
     }, [sessionVal]);
 
 
     const handleReset = () => {
-        setActive(false)
-        setMode('session')
-        setBreakTime(0)
-        setSessionVal(0)
+        setActive(false);
+        setMode('session');
+        setBreakTime(0);
+        setSessionVal(0);
     };
 
     const handleSubmit = () => {
@@ -69,14 +73,12 @@ const App = () => {
             .post('http://localhost:8080/pomodori', pomodori)
             .then(
                 response => {
-
-
                 }
             );
     };
     return (
         <div className="container">
-            <div className="row">
+            <div className="row" >
                 {/*<div className="col-sm-6">*/}
                 {/*    <label>*/}
                 {/*        Task*/}
@@ -102,18 +104,18 @@ const App = () => {
                 {/*           placeholder={"Distractions"}/>*/}
                 {/*    <input type="submit" className="btn btn-info" onClick={handleSubmit}/>*/}
                 {/*</div>*/}
-                <div className="col-sm-6">
+                <div className="col-sm-6" >
                     <div>
                         <Timer id={"work"} currentTime={[time, setTime]} />
                         <Timer id={"restTime"} currentTime={[breakTime, setBreakTime]} />
-                        {/*<TimeSet type={'Work time'} value={[sessionVal, setSessionVal]}/>*/}
-                        {/*<TimeSet type={'Break time'} value={[breakTime, setBreakTime]}/>*/}
                     </div>
+                </div>
+            </div>
+            <div className="row">
                     <Controls
                         activeStatus={[active, setActive]}
                         handleReset={handleReset}
                     />
-                </div>
             </div>
         </div>
     )
