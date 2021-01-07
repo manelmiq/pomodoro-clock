@@ -8,13 +8,13 @@ const TimeSet = ({type, value}) => {
     });
 
     useEffect(() => {
-        console.log('the time set was changed')
+
         let newVal = (parseInt(state.minutes) + parseInt(state.hours) * 60) * 60;
         if(isNaN(newVal)){
             newVal = '';
         }
         setVal(newVal);
-        console.log(val);
+
     }, [state.minutes, state.hours]);
 
     function handleChange(evt) {

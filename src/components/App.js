@@ -34,7 +34,7 @@ const App = () => {
 
     useEffect(() => {
         setTime(sessionVal);
-        console.log("time and session value", time, sessionVal);
+
     }, [sessionVal]);
 
 
@@ -46,10 +46,16 @@ const App = () => {
     };
 
     const handleSubmit = () => {
-        console.log(time);
-        let beginWork = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
-        let beginRest = moment(beginWork).add(time, 'seconds').format("YYYY-MM-DD HH:mm:ss");
-        let endPomodoro = moment(beginRest).add(breakTime, 'seconds').format("YYYY-MM-DD HH:mm:ss");
+        const dateFormatString = "YYYY-MM-DD HH:mm:ss";
+        let beginWork = moment(new Date())
+            .format(dateFormatString);
+        let beginRest = moment(beginWork)
+            .add(time, 'seconds')
+            .format(dateFormatString);
+        let endPomodoro = moment(beginRest)
+            .add(breakTime, 'seconds')
+            .format(dateFormatString);
+
         let pomodori = {
             "task": task,
             "distractionsDescription": distractions,
@@ -59,13 +65,12 @@ const App = () => {
             "beginRest": beginRest,
             "endPomodori": endPomodoro
         };
-        console.log(pomodori);
         axios
             .post('http://localhost:8080/pomodori', pomodori)
             .then(
                 response => {
-                    console.log(response);
-                    console.log(response.data);
+
+
                 }
             );
     };
