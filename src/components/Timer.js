@@ -1,15 +1,18 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react';
+import NumberFormat from 'react-number-format';
 import moment from 'moment'
 
 const Timer = ({currentTime, label}) => {
     const [time, setTime] = currentTime;
     const [hour, setHour] = useState(0);
     const [minute, setMinute] = useState(0);
+    const [timerSet, setTimerSet] = useState('000000');
+    const [active, setActive] = useState(false);
     const [unit] = 'seconds';
 
 
     const changeHours = (event) => {
-        if(valueBetween(0, 24, event.target.value)){
+        if (valueBetween(0, 24, event.target.value)) {
             setHour(0);
             return;
         }
@@ -17,7 +20,7 @@ const Timer = ({currentTime, label}) => {
         const totalTime = hour * 3600 + 60 * minute;
         setTime(totalTime);
     }
-    const valueBetween= (min, max, value) =>{
+    const valueBetween = (min, max, value) => {
         value = parseInt(value, 10);
         console.log(value);
         console.log((value >= min && value <= max));
@@ -25,20 +28,30 @@ const Timer = ({currentTime, label}) => {
     }
 
 
-
     const changeMinutes = (event) => {
         console.log(parseInt(event.target.value, 10));
         setMinute(parseInt(event.target.value, 10));
-        const totalTime = hour * 3600 + 60* minute;
+        const totalTime = hour * 3600 + 60 * minute;
         setTime(totalTime);
     }
 
     function formatTwoDigits(number) {
         return ((number < 10) ? '0' + number : number);
     }
-    const handleTimeChange = () =>{
+
+    const handleTimeChange = () => {
         console.log("focus");
         console.log(time);
+        setActive(!active);
+    }
+
+    const handleTimerSet = (event) => {
+        console.log(event.target.value);
+        setTimerSet(event.target.value);
+    }
+
+    const formatWhenLoseFocus = () =>{
+        console.log('lose focus');
     }
 
     // const emptyValue = () => {
@@ -47,19 +60,46 @@ const Timer = ({currentTime, label}) => {
     // }
 
     return (
-        <div onFocus={handleTimeChange}>
-            <h1 className="timeset-wrapper"  >
-                <input type="number" name="hour" className="clockDigits"
-                       value={formatTwoDigits(moment.duration(time, unit).hours())}
-                       onChange={changeHours} /> :
-                <input type="number" name="minute" className="clockDigits"
-                       value={ formatTwoDigits(moment.duration(time, unit).minutes())}
-                       onChange={changeMinutes}  /> :
-                <input type="number" name="seconds" className="clockDigits"
-                       value={formatTwoDigits(moment.duration(time, unit).seconds())}/>
-            </h1>
+        <div >
+                <NumberFormat format="##:##:##"
+                              mask="_"
+                              allowEmptyFormatting
+                              isNumericString={true}
+                              onChange={handleTimerSet}
+                              className="clockDigits"
+                              onBlur={formatWhenLoseFocus}   />
         </div>
     )
+    /*
+    return (
+        <div >
+            { !active ?
+                <div  onClick={handleTimeChange} style={{border:"2x solid black"}}>
+                    <p> not running</p>
+                    <h1 className="timeset-wrapper">
+                        <div className="clockDigits"> {formatTwoDigits(moment.duration(time, unit).hours())}  </div> :
+                        <div className="clockDigits"> {formatTwoDigits(moment.duration(time, unit).minutes())} </div> :
+                        <div className="clockDigits"> {formatTwoDigits(moment.duration(time, unit).seconds())} </div>
+                    </h1>
+                </div>
+                :
+                <div  style={{border:"2x solid black"}}>
+                    <p>editing</p>
+
+                    <h1 className="timeset-wrapper">
+                        <div className="clockDigits">
+                            {formatTwoDigits(moment.duration(time, unit).hours())}
+                        </div> :
+                        <div className="clockDigits"> {formatTwoDigits(moment.duration(time, unit).minutes())} </div>:
+                        <div className="clockDigits"> {formatTwoDigits(moment.duration(time, unit).seconds())} </div>
+                    </h1>
+                </div>
+            }
+        </div>
+
+    )
+    *
+     */
 };
 
 export default Timer

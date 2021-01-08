@@ -104,7 +104,7 @@ const App = () => {
                 {/*           placeholder={"Distractions"}/>*/}
                 {/*    <input type="submit" className="btn btn-info" onClick={handleSubmit}/>*/}
                 {/*</div>*/}
-                <div className="col-sm-4">
+                <div className="col-lg-8">
                     <div>
                         <Timer id={"work"} currentTime={[time, setTime]}  />
                     </div>
