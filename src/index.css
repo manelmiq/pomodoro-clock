@@ -125,11 +125,6 @@ main {
   font-weight: 700;
 }
 
-@media only screen and (max-width: 600px) {
-  main {
-    width: 100%;
-  }
-}
 
 .timeinput input[type="text"]
 {
@@ -140,5 +135,6 @@ main {
 .clockDigits{
   border-width:0px;
   border:none;
-  width: 70px;
+  text-align: center;
+  font-size: 50px;
 }

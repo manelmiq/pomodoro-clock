@@ -77,7 +77,7 @@ const App = () => {
             );
     };
     return (
-        <div className="container">
+        <div className="container jumbotron">
             <div className="row" >
                 {/*<div className="col-sm-6">*/}
                 {/*    <label>*/}

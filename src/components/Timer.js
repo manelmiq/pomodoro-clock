@@ -8,6 +8,7 @@ const Timer = ({currentTime, label}) => {
     const [minute, setMinute] = useState(0);
     const [timerSet, setTimerSet] = useState('000000');
     const [active, setActive] = useState(false);
+    const [timeFormated, setTimeFormated] = useState('');
     const [unit] = 'seconds';
 
 
@@ -48,6 +49,7 @@ const Timer = ({currentTime, label}) => {
     const handleTimerSet = (event) => {
         console.log(event.target.value);
         setTimerSet(event.target.value);
+        setTimeFormated(event.target.value);
     }
 
     const formatWhenLoseFocus = () =>{
@@ -60,14 +62,16 @@ const Timer = ({currentTime, label}) => {
     // }
 
     return (
-        <div >
+        <div className="timer" >
                 <NumberFormat format="##:##:##"
                               mask="_"
                               allowEmptyFormatting
                               isNumericString={true}
                               onChange={handleTimerSet}
                               className="clockDigits"
-                              onBlur={formatWhenLoseFocus}   />
+                              onBlur={formatWhenLoseFocus}
+                              value={timeFormated}
+                />
         </div>
     )
     /*
