@@ -38,6 +38,7 @@ const App = () => {
     }, active ? 10 : null);
 
     useEffect(() => {
+        console.log('set time');
         setTime(sessionVal);
     }, [sessionVal]);
 
@@ -47,6 +48,7 @@ const App = () => {
         setMode('session');
         setBreakTime(0);
         setSessionVal(0);
+        setTime(0);
     };
 
     const handleSubmit = () => {
@@ -78,7 +80,7 @@ const App = () => {
     };
     return (
         <div className="container">
-            <div className="row" >
+            <div className="row w-100" >
                 {/*<div className="col-sm-6">*/}
                 {/*    <label>*/}
                 {/*        Task*/}
@@ -104,10 +106,16 @@ const App = () => {
                 {/*           placeholder={"Distractions"}/>*/}
                 {/*    <input type="submit" className="btn btn-info" onClick={handleSubmit}/>*/}
                 {/*</div>*/}
-                <div className="col-sm-6" >
-                    <div>
+                <div className="col-sm-8" >
+                    <div className="text-center">
                         <Timer id={"work"} currentTime={[time, setTime]} />
                         <Timer id={"restTime"} currentTime={[breakTime, setBreakTime]} />
+                    </div>
+                </div>
+                <div className="col-sm-4" >
+                    <div className="float-left">
+                        <TimeSet value={[time, setTime]} />
+                        <TimeSet value={[breakTime, setBreakTime]} />
                     </div>
                 </div>
             </div>
