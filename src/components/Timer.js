@@ -8,8 +8,14 @@ const Timer = ({currentTime, label}) => {
     const [unit] = 'seconds';
 
 
+    useEffect( () =>{
+            console.log('use effect' );
+            setTime(time)
+        }, [time, hour, minute]
+    );
+
     const changeHours = (event) => {
-        if(valueBetween(0, 24, event.target.value)){
+        if(!valueBetween(0, 24, event.target.value)){
             setHour(0);
             return;
         }
@@ -17,14 +23,13 @@ const Timer = ({currentTime, label}) => {
         const totalTime = hour * 3600 + 60 * minute;
         setTime(totalTime);
     }
+
     const valueBetween= (min, max, value) =>{
         value = parseInt(value, 10);
         console.log(value);
         console.log((value >= min && value <= max));
         return (value >= min && value <= max);
     }
-
-
 
     const changeMinutes = (event) => {
         console.log(parseInt(event.target.value, 10));
@@ -50,9 +55,9 @@ const Timer = ({currentTime, label}) => {
                        onChange={changeHours} /> :
                 <input type="number" name="minute" className="clockDigits"
                        value={ formatTwoDigits(moment.duration(time, unit).minutes())}
-                       onChange={changeMinutes}  /> :
+                       onChange={changeMinutes} /> :
                 <input type="number" name="seconds" className="clockDigits"
-                       value={formatTwoDigits(moment.duration(time, unit).seconds())}/>
+                       value={formatTwoDigits(moment.duration(time, unit).seconds())} />
             </h1>
         </div>
     )
