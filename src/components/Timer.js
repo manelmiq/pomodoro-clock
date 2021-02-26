@@ -7,13 +7,9 @@ const Timer = ({currentTime, label}) => {
     const [minute, setMinute] = useState(0);
     const [unit] = 'seconds';
 
-
-
-
     function formatTwoDigits(number) {
         return ((number < 10) ? '0' + number : number);
     }
-
 
     return (
         <div>

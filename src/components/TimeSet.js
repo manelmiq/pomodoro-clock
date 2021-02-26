@@ -38,6 +38,8 @@ const TimeSet = ({type, value}) => {
 
     return (
         <h1 className="timeset-wrapper">
+
+
             <input type="number"
                    value={timeObj.hours} name="hours"
                    onChange={handleChange}
